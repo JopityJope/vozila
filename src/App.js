@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import { useState } from "react";
+import NovoVozilo from "./components/NovoVozilo";
+import Vozilo from "./components/Vozilo";
 
 function App() {
+  const [vozila, setVozila] = useState([
+    { id: 1, marka: "VW", boja: "bijela", godište: 2020 },
+    { id: 2, marka: "Mercedes", boja: "crna", godište: 2018 },
+  ]);
+
+  const novoVozilo = function ({ marka, boja, godiste }) {
+    setVozila([
+      ...vozila,
+      { id: vozila.length + 1, marka: marka, boja: boja, godište: godiste },
+    ]);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NovoVozilo onUserSubmit={novoVozilo} />
+      <ul>
+        {vozila.map((vozilo) => (
+          <Vozilo
+            key={vozilo.id}
+            marka={vozilo.marka}
+            boja={vozilo.boja}
+            godiste={vozilo.godište}
+          />
+        ))}
+      </ul>
+    </>
   );
 }
 
